@@ -80,7 +80,7 @@ class SonyVegasByBootcamp {
     async joinVideo(nameTxt: string){
         try {
             let extensionTextos = '.txt'
-            let extensionVideos = '.mpeg'
+            let extensionVideos = '..mp4'
             let videoJoinSource={
                 srcTxt: `${this.dirTxt}/${nameTxt}${extensionTextos}`,
                 srcTxtOutput:`${this.dirTxt}/${nameTxt}-${uuid4()}${extensionVideos}`,
