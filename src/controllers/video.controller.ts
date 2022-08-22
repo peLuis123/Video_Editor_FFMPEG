@@ -82,6 +82,14 @@ class VideoController {
             throw error
         }
     }
+
+    async addFilterVideos(nameVideo:string){
+        try {
+            await SonyVegasController.addFilterVideos(nameVideo)
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 export default new VideoController()

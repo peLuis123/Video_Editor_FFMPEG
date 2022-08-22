@@ -6,13 +6,14 @@ import uuid4 from "uuid4";
 
 class SonyVegasByBootcamp {
     dirVideos: string;
-    constructor(){
-        this.dirVideos = `${__dirname.split('/').slice(0,5).join('/')}/srcvideos`
-    }
     dirTxt: string;//
-    constructortxt(){//
-        this.dirTxt = `${__dirname.split('/').slice(0,5).join('/')}/srcvideos`//
-    }//
+    constructor(){
+        this.dirVideos = `${__dirname.split('/').slice(0,5).join('/')}/backend/codeprofe/srcvideos`
+        console.log("direccion",__dirname)
+        this.dirTxt = `${__dirname.split('/').slice(0,5).join('/')}/backend/codeprofe/srcvideos`//
+        
+    }
+
     async ffmpeg(argsFfmpeg: any) {
         try {
             return new Promise((resolve, reject) => {
@@ -82,7 +83,7 @@ class SonyVegasByBootcamp {
             let extensionVideos = '.mpeg'
             let videoJoinSource={
                 srcTxt: `${this.dirTxt}/${nameTxt}${extensionTextos}`,
-                srcTxtOutput:`${this.dirTxt}/${nameTxt}${extensionVideos}`,
+                srcTxtOutput:`${this.dirTxt}/${nameTxt}-${uuid4()}${extensionVideos}`,
             }
             console.log("🚀 ~ file: sonyvegas.controller.ts ~ line 87 ~ SonyVegasByBootcamp ~ joinVideo ~ videoJoinSource", videoJoinSource)
             //ffmpeg -f concat -i a.txt -c copy Funny_join.mpeg
@@ -95,33 +96,40 @@ class SonyVegasByBootcamp {
                 'copy',
                 videoJoinSource?.srcTxtOutput
             ]
+            await this.ffmpeg(args)
         } catch (error) {
         console.log("🚀 ~ file: sonyvegas.controller.ts ~ line 99 ~ SonyVegasByBootcamp ~ joinVideo ~ error", error)
             
         }
     }
-//
-
-    async cutVideos(videoSources: any[]) {
+    //no funciona esta ruta falta revisar documentacion por mi parte
+    async addFilterVideos(nameVideo: string) {
         try {
+            //let extensionTextos = '.txt'
+            let extensionVideos = '.mp4'
+            let videoJoinSource={
+                srcVideo: `${this.dirVideos}/${nameVideo}${extensionVideos}`,
+                srcVideoOutput:`${this.dirVideos}/${nameVideo}-${uuid4()}${extensionVideos}`,
+            }
+            //no me reconoce nada despues de la coma revisar
+            let args = [
+                '-i',
+                videoJoinSource?.srcVideo,
+                '-lavfi ',
+                `"[0:v]scale=ih*16/9:-1,boxblur=luma_radius=min(h\,w)/20:luma_power=1:chroma_radius=min(cw\,ch)/20:chroma_power=1[bg];[bg][0:v]overlay=(W-w)/2:(H-h)/2,crop=h=iw*9/16" `,
+                '-vb 800k',
+                videoJoinSource?.srcVideoOutput
+            ]
+            await this.ffmpeg(args)
         } catch (error) {
-            throw error
         }
     }
-    async joinVideos(arrVideos: any[]) {
-        try {
-
-        } catch (error) {
-
-        }
-    }
-    async addFilterVideos(arrVideos: any[]) {
-        try {
-
-        } catch (error) {
-
-        }
-    }
+    /*async scrapeer(link: string){
+        let args[
+            'youtube-dl ${link}'
+        ]
+            
+    }*/
     async addImagesToVideos(arrVideos: any[]) {
         try {
 
