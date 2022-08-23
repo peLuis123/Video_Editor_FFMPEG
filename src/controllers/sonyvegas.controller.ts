@@ -69,6 +69,7 @@ class SonyVegasByBootcamp {
                 '-async 1',
                 videoSource?.srcVideoOutput
             ]
+            console.log("comando ",args)
 
             await this.ffmpeg(args)
         } catch (error) {
@@ -103,6 +104,8 @@ class SonyVegasByBootcamp {
         }
     }
     //no funciona esta ruta falta revisar documentacion por mi parte
+
+    //ffmpeg -i input.mp4 -lavfi '[0:v]scale=ih*16/9:-1,boxblur=luma_radius=min(h,w)/20:luma_power=1:chroma_radius=min(cw,ch)/20:chroma_power=1[bg];[bg][0:v]overlay=(W-w)/2:(H-h)/2,crop=h=iw*9/16' -vb 800K output.webm
     async addFilterVideos(nameVideo: string) {
         try {
             //let extensionTextos = '.txt'
@@ -116,9 +119,10 @@ class SonyVegasByBootcamp {
                 '-i',
                 videoJoinSource?.srcVideo,
                 '-lavfi ',
-                `"[0:v]scale=ih*16/9:-1,boxblur=luma_radius=min(h\,w)/20:luma_power=1:chroma_radius=min(cw\,ch)/20:chroma_power=1[bg];[bg][0:v]overlay=(W-w)/2:(H-h)/2,crop=h=iw*9/16" `,
+                `'[0:v]scale=ih*16/9:-1,boxblur=luma_radius=min(h,w)/20:luma_power=1:chroma_radius=min(cw,ch)/20:chroma_power=1[bg];[bg][0:v]overlay=(W-w)/2:(H-h)/2,crop=h=iw*9/16'`,
                 '-vb 800k',
                 videoJoinSource?.srcVideoOutput
+
             ]
             await this.ffmpeg(args)
         } catch (error) {

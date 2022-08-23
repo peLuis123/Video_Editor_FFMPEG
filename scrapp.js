@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const util = require('util');
 const child_process = require('child_process')
 const exec = util.promisify(require('child_process').exec);
-(async () => {
+( async () => {
     const browser = await puppeteer.launch({ headless: false, args: ['--start-maximized'] });
     const page = await browser.newPage();
     await page.goto("https://www.reddit.com/r/TikTokCringe/");
@@ -23,8 +23,11 @@ const exec = util.promisify(require('child_process').exec);
         console.log(enlace)
         const { stdout } = await exec(`youtube-dl '${enlace}' `);
     }
-// comando para poder ejecutar comandos de consola desde javascritp    
-    exec('mv *.mp4 srcvideos/;cd srcvideos; dir -b > lista.txt', (error, stdout, stderr) => {
+// comando para poder ejecutar comandos de consola desde javascritp  
+//probar con este comando for f in *mp4; do echo "file '$f'" >> file_list1.txt; done
+    //cd srcvideos; for f in *mp4; do echo "file '$f'" >> file_list.txt; done
+    //'mv *.mp4 srcvideos/;cd srcvideos; dir -b > lista.txt',
+    exec(`mv *.mp4 srcvideos/;cd srcvideos; for f in *mp4; do echo "file '$f'" >> file_list.txt; done`, (error, stdout, stderr) => {
         if (error) {
             console.error(`error: ${error.message}`);
             return;
