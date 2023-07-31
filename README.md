@@ -60,6 +60,10 @@ Envía una solicitud POST a la ruta /addFilterVideos con el siguiente parámetro
 {
   "nameVideo": "nombre_del_video.mp4"
 }
+
+Demostracion
+el repositorio cuenta con una demostracion de prueba del proyecto se puede encontrar en el repositorio bajo el nombre de demo.mp4
+
 Recomendaciones
 Antes de utilizar el automatizador, asegúrate de tener una comprensión básica de FFMPEG y YouTube-DL, así como de los formatos de video y codecs compatibles.
 
